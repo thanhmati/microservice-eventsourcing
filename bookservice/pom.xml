@@ -65,6 +65,12 @@
 			<artifactId>axon-spring-boot-starter</artifactId>
 			<version>4.9.3</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>33.2.1-jre</version>
+		</dependency>
 
 	</dependencies>
 	<dependencyManagement>
