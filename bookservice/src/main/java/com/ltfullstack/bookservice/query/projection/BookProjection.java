@@ -8,11 +8,11 @@ import com.ltfullstack.bookservice.query.queries.GetBookDetailQuery;
 import org.axonframework.queryhandling.QueryHandler;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class BookProjection {
@@ -33,11 +33,11 @@ public class BookProjection {
     }
 
     @QueryHandler
-    public BookResponseModel handle(GetBookDetailQuery query){
+    public BookResponseModel handle(GetBookDetailQuery query) throws Exception {
+
         BookResponseModel bookResponseModel = new BookResponseModel();
-        bookRepository.findById(query.getId()).ifPresent(book -> {
-             BeanUtils.copyProperties(book,bookResponseModel);
-        });
+        Book book = bookRepository.findById(query.getId()).orElseThrow(() -> new Exception("Book not found with BookId: "+ query.getId()));
+        BeanUtils.copyProperties(book,bookResponseModel);
         return bookResponseModel;
     }
 }
