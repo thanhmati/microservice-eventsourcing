@@ -1,0 +1,35 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: bookservice
+          uri: lb://bookservice
+          predicates:
+            - Path=/books/**
+        - id: employeeservice
+          uri: lb://employeeservice
+          predicates:
+            - Path=/api/v1/employees/**
+    eureka:
+      client:
+        serviceUrl:
+          defaultZone: http://localhost:8761/eureka/
+        fetchRegistry: true
+        registerWithEureka: true
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
