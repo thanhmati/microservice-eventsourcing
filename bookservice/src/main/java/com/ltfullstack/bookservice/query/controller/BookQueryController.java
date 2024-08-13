@@ -3,6 +3,7 @@ package com.ltfullstack.bookservice.query.controller;
 import com.ltfullstack.bookservice.query.model.BookResponseModel;
 import com.ltfullstack.bookservice.query.queries.GetAllBookQuery;
 import com.ltfullstack.bookservice.query.queries.GetBookDetailQuery;
+import com.ltfullstack.commonservice.services.KafkaService;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.axonframework.queryhandling.QueryGateway;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +22,13 @@ public class BookQueryController {
     @Autowired
     private QueryGateway queryGateway;
 
+    @Autowired
+    private KafkaService kafkaService;
+
     @GetMapping
     public List<BookResponseModel> getAllBooks(){
         GetAllBookQuery query = new GetAllBookQuery();
+        kafkaService.sendMessage("test","Hello");
         return  queryGateway.query(query, ResponseTypes.multipleInstancesOf(BookResponseModel.class)).join();
     }
 
