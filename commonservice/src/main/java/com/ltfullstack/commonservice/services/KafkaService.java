@@ -2,7 +2,9 @@ package com.ltfullstack.commonservice.services;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.annotation.DltHandler;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,4 +18,6 @@ public class KafkaService {
         kafkaTemplate.send(topic,message);
         log.info("Message send to topic: "+topic);
     }
+
+
 }
