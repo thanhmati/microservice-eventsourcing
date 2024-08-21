@@ -5,6 +5,7 @@ import org.apache.kafka.common.errors.RetriableException;
 import org.springframework.kafka.annotation.DltHandler;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.annotation.RetryableTopic;
+import org.springframework.kafka.retrytopic.DltStrategy;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.stereotype.Component;
@@ -29,6 +30,7 @@ public class EventConsumer {
     @RetryableTopic(
             attempts = "2",
             backoff = @Backoff(delay = 1000, multiplier = 2),
+            dltStrategy = DltStrategy.FAIL_ON_ERROR,
             autoCreateTopics = "true",
             include = {RetriableException.class,RuntimeException.class}
     )
