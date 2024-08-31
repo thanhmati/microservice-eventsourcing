@@ -3,3 +3,16 @@ spring:
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
     consumer:
       group-id: ${KAFKA_GROUP_ID:default-group}
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: dotanthanhvlog@gmail.com
+    password: jyrz vggt pzxp taot
+    properties:
+        mail:
+          smtp:
+            auth: true
+            starttls:
+              enable: true
+          transport:
+            protocol: smtp
