@@ -14,5 +14,5 @@ public class BorrowingCreateModel {
 
     private String bookId;
     private String employeeId;
-    private Date borrowingDate;
+
 }
