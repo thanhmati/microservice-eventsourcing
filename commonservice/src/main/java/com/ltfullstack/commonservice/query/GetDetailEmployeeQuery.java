@@ -1,4 +1,4 @@
-package com.ltfullstack.bookservice.query.queries;
+package com.ltfullstack.commonservice.query;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetBookDetailQuery {
+public class GetDetailEmployeeQuery {
     private String id;
 }
