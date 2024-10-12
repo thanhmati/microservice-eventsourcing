@@ -1,5 +1,8 @@
 package com.ltfullstacak.notificationservice.event;
 
+import com.google.gson.Gson;
+import com.ltfullstack.commonservice.constants.Topic;
+import com.ltfullstack.commonservice.model.BorrowingSuccessfulModel;
 import com.ltfullstack.commonservice.services.EmailService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.common.errors.RetriableException;
@@ -21,6 +24,9 @@ public class EventConsumer {
 
     @Autowired
     private EmailService emailService;
+
+    @Autowired
+    private Gson gson;
 
     @RetryableTopic(
             attempts = "4", // 3 topic retry + 1 topic DLQ
@@ -63,5 +69,12 @@ public class EventConsumer {
         placeholders.put("name","Lap trinh FullStack");
 
         emailService.sendEmailWithTemplate(message,"Welcome to Christmas","emailTemplate.ftl",placeholders,null);
+    }
+
+    @KafkaListener(topics = Topic.BORROWING_SUCCESSFUL,containerFactory = "kafkaListenerContainerFactory")
+    public void borrowingSuccessful(String message){
+        log.info("Received message: " +message);
+        BorrowingSuccessfulModel model = gson.fromJson(message, BorrowingSuccessfulModel.class);
+        log.info("Nhân viên "+model.getEmployeeName()+" đã mượn sách thành công");
     }
 }

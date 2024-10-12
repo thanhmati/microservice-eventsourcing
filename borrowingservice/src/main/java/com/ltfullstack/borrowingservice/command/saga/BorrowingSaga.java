@@ -1,16 +1,20 @@
 package com.ltfullstack.borrowingservice.command.saga;
 
+import com.google.gson.Gson;
 import com.ltfullstack.borrowingservice.command.command.DeleteBorrowingCommand;
 import com.ltfullstack.borrowingservice.command.event.BorrowingCreatedEvent;
 import com.ltfullstack.borrowingservice.command.event.BorrowingDeletedEvent;
 import com.ltfullstack.commonservice.command.RollBackStatusBookCommand;
 import com.ltfullstack.commonservice.command.UpdateStatusBookCommand;
+import com.ltfullstack.commonservice.constants.Topic;
 import com.ltfullstack.commonservice.event.BookRollBackStatusEvent;
 import com.ltfullstack.commonservice.event.BookUpdateStatusEvent;
 import com.ltfullstack.commonservice.model.BookResponseCommonModel;
+import com.ltfullstack.commonservice.model.BorrowingSuccessfulModel;
 import com.ltfullstack.commonservice.model.EmployeeResponseCommonModel;
 import com.ltfullstack.commonservice.queries.GetBookDetailQuery;
 import com.ltfullstack.commonservice.queries.GetDetailEmployeeQuery;
+import com.ltfullstack.commonservice.services.KafkaService;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
@@ -31,6 +35,12 @@ public class BorrowingSaga {
 
     @Autowired
     private transient QueryGateway queryGateway;
+
+    @Autowired
+    private KafkaService kafkaService;
+
+    @Autowired
+    private Gson gson;
 
     @StartSaga
     @SagaEventHandler(associationProperty = "id")
@@ -62,7 +72,8 @@ public class BorrowingSaga {
             if(employeeModel.getIsDisciplined()){
                 throw new Exception("Nhân viên bị kỉ luật");
             }else{
-                log.info("Đã mượn sách thành công");
+
+                kafkaService.sendMessage(Topic.BORROWING_SUCCESSFUL,"test");
                 SagaLifecycle.end();
             }
 
