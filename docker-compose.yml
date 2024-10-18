@@ -1,0 +1,53 @@
+version: "3.8"
+
+services:
+    discoverserver:
+        build:
+            context: .
+            dockerfile: discoverserver/Dockerfile
+        ports:
+            - "8761:8761"
+        networks:
+            - microservices-network
+
+    # apigateway:
+    #     build:
+    #         context: .
+    #         dockerfile: apigateway/Dockerfile
+    #     ports:
+    #         - "8080:8080"
+    #     networks:
+    #         - microservices-network
+    #     depends_on:
+    #         - discoverserver
+
+    bookservice:
+        build:
+            context: .
+            dockerfile: bookservice/Dockerfile
+        ports:
+            - "9001:9001"
+        networks:
+            - microservices-network
+        depends_on:
+            - discoverserver
+            - axonserver
+        environment:
+            - "AXONIQ_AXONSERVER_SERVERS=axonserver:8024"
+
+    axonserver:
+        image: "axoniq/axonserver:latest"
+        hostname: axonserver
+        container_name: axonserver
+        environment:
+            - "AXONIQ_AXONSERVER_STANDALONE=TRUE"
+        ports:
+            - "8024:8024"
+            - "8124:8124"
+            - "8224:8224"
+        networks:
+            - microservices-network
+
+networks:
+    microservices-network:
+        driver: bridge
