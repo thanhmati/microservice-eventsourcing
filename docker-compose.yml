@@ -1,0 +1,14 @@
+version: "3.8"
+
+services:
+    discoveryserver:
+        build:
+            context: .
+            dockerfile: discoverserver/Dockerfile
+        ports:
+            - "8761:8761"
+        networks:
+            - microservice-networks
+networks:
+    microservice-networks:
+        driver: bridge
