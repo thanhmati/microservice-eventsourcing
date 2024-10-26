@@ -1,35 +1,45 @@
-server:
-  port:8080
+server: port:8080
 
 spring:
-  application:
-    name: gateway-service
-  redis:
-    port: 6379
-    host: localhost
-  cloud:
-    gateway:
-      discover:
-        locator:
-          enabled: true
-      routes:
-        - id: employeeservice
-          uri: lb://employeeservice
-          predicates:
-            - Path=/api/v1/employees/**
-          filters:
-            - name: RequestRateLimiter
-              args:
-                redis-rate-limiter.replenishRate: 10
-                redis-rate-limiter.burstCapacity: 20
-                redis-rate-limiter.requestedTokens: 1
-            - KeyAuthFilter
+    application:
+        name: gateway-service
+    redis:
+        port: 6379
+        host: localhost
+    cloud:
+        gateway:
+            discover:
+                locator:
+                    enabled: true
+            routes:
+                - id: employeeservice
+                  uri: lb://employeeservice
+                  predicates:
+                      - Path=/api/v1/employees/**
+                  filters:
+                      - name: RequestRateLimiter
+                        args:
+                            redis-rate-limiter.replenishRate: 10
+                            redis-rate-limiter.burstCapacity: 20
+                            redis-rate-limiter.requestedTokens: 1
+                      - KeyAuthFilter
+                - id: bookservice
+                  uri: lb://bookservice
+                  predicates:
+                      - Path=/api/v1/books/**
+                  filters:
+                      - name: RequestRateLimiter
+                        args:
+                            redis-rate-limiter.replenishRate: 10
+                            redis-rate-limiter.burstCapacity: 20
+                            redis-rate-limiter.requestedTokens: 1
+                      - KeyAuthFilter
 
 eureka:
-  instance:
-    hostname: localhost
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka
-      register-with-eureka: true
-      fetch-registry: true
+    instance:
+        hostname: discoveryserver
+    client:
+        service-url:
+            defaultZone: http://discoveryserver:8761/eureka
+            register-with-eureka: true
+            fetch-registry: true

@@ -9,6 +9,123 @@ services:
             - "8761:8761"
         networks:
             - microservice-networks
+    bookservice:
+        build:
+            context: .
+            dockerfile: bookservice/Dockerfile
+        ports:
+            - "9001:9001"
+        networks:
+            - microservice-networks
+        depends_on:
+            - discoveryserver
+            - axonserver
+        environment:
+            - "AXONIQ_AXONSERVER_SERVERS=axonserver:8024"
+    apigateway:
+        build:
+            context: .
+            dockerfile: apigateway/Dockerfile
+        ports:
+            - "8080:8080"
+        networks:
+            - microservice-networks
+        depends_on:
+            - discoveryserver
+            - redis
+    notificationservice:
+        build:
+            context: .
+            dockerfile: notificationservice/Dockerfile
+        ports:
+            - "9003:9003"
+        networks:
+            - microservice-networks
+        depends_on:
+            - zookeeper
+            - broker
+            - axonserver
+        environment:
+            - "KAFKA_BOOTSTRAP_SERVERS=broker:9092"
+            - "AXONIQ_AXONSERVER_SERVERS=axonserver:8024"
+    axonserver:
+        image: "axoniq/axonserver:latest"
+        hostname: axonserver
+        container_name: axonserver
+        environment:
+            - "AXONIQ_AXONSERVER_STANDALONE=TRUE"
+        ports:
+            - "8024:8024"
+            - "8124:8124"
+            - "8224:8224"
+        networks:
+            - microservice-networks
+    redis:
+        image: redis:latest
+        restart: always
+        hostname: redis
+        ports:
+            - "6379:6379"
+        networks:
+            - microservice-networks
+    zookeeper:
+        image: confluentinc/cp-zookeeper:7.7.0
+        hostname: zookeeper
+        container_name: zookeeper
+        ports:
+            - "2181:2181"
+        environment:
+            ZOOKEEPER_CLIENT_PORT: 2181
+            ZOOKEEPER_TICK_TIME: 2000
+        networks:
+            - microservice-networks
+    broker:
+        image: confluentinc/cp-server:7.7.0
+        hostname: broker
+        container_name: broker
+        depends_on:
+            - zookeeper
+        ports:
+            - "9092:9092"
+            - "9101:9101"
+        environment:
+            KAFKA_BROKER_ID: 1
+            KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
+            KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+            KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker:29092,PLAINTEXT_HOST://broker:9092
+            KAFKA_METRIC_REPORTERS: io.confluent.metrics.reporter.ConfluentMetricsReporter
+            KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+            KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+            KAFKA_CONFLUENT_LICENSE_TOPIC_REPLICATION_FACTOR: 1
+            KAFKA_CONFLUENT_BALANCER_TOPIC_REPLICATION_FACTOR: 1
+            KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+            KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+            KAFKA_JMX_PORT: 9101
+            KAFKA_JMX_HOSTNAME: localhost
+            CONFLUENT_METRICS_REPORTER_BOOTSTRAP_SERVERS: broker:29092
+            CONFLUENT_METRICS_REPORTER_TOPIC_REPLICAS: 1
+            CONFLUENT_METRICS_ENABLE: "true"
+            CONFLUENT_SUPPORT_CUSTOMER_ID: "anonymous"
+        networks:
+            - microservice-networks
+    control-center:
+        image: confluentinc/cp-enterprise-control-center:7.7.0
+        hostname: control-center
+        container_name: control-center
+        depends_on:
+            - broker
+        ports:
+            - "9021:9021"
+        environment:
+            CONTROL_CENTER_BOOTSTRAP_SERVERS: "broker:29092"
+            CONTROL_CENTER_REPLICATION_FACTOR: 1
+            CONTROL_CENTER_INTERNAL_TOPICS_PARTITIONS: 1
+            CONTROL_CENTER_MONITORING_INTERCEPTOR_TOPIC_PARTITIONS: 1
+            CONFLUENT_METRICS_TOPIC_REPLICATION: 1
+            PORT: 9021
+        networks:
+            - microservice-networks
+
 networks:
     microservice-networks:
         driver: bridge
