@@ -34,7 +34,7 @@ jobs:
                   docker compose -f docker-compose.yml build
                   docker compose -f docker-compose.yml push
     deploy:
-        needs: build
+        needs: build-and-push
         runs-on: ubuntu-latest
         steps:
             - name: SSH to server
