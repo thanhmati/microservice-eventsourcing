@@ -45,4 +45,4 @@ jobs:
                   key: ${{ secrets.SERVER_KEY }}
                   port: ${{ secrets.SERVER_PORT }}
                   envs: DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}
-                  script_path: scripts/deploy.sh
+                  script_file: scripts/deploy.sh
