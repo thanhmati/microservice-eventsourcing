@@ -37,6 +37,10 @@ jobs:
         needs: build-and-push
         runs-on: ubuntu-latest
         steps:
+            # Checkout repository
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
             - name: SSH to server
               uses: appleboy/ssh-action@v1.2.0
               with:
@@ -45,4 +49,4 @@ jobs:
                   key: ${{ secrets.SERVER_KEY }}
                   port: ${{ secrets.SERVER_PORT }}
                   envs: DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}
-                  script_path: testdata/deploy.sh
+                  script_path: scripts/deploy.sh
