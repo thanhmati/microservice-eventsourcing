@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class DiscoveryController{
     @GetMapping()
     public String welcome() {
-        return "Welcome Lap Trinh Full Stack";
+        return "Welcome Lap Trinh Full Stack update";
     }
     
 }
