@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class DiscoveryServerController {
     @GetMapping()
     public String helloWorld(){
-        return "Lap trinh full stack";
+        return "Ai choi cau long khong";
     }
 }
