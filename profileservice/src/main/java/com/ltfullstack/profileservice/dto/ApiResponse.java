@@ -1,6 +1,7 @@
-package com.devteria.profile.dto;
+package com.ltfullstack.profileservice.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

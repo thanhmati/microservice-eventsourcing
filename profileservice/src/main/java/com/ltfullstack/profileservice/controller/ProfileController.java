@@ -1,22 +1,23 @@
-package com.devteria.profile.controller;
+package com.ltfullstack.profileservice.controller;
 
-import com.devteria.profile.dto.ApiResponse;
-import com.devteria.profile.dto.request.RegistrationRequest;
-import com.devteria.profile.dto.response.ProfileResponse;
-import com.devteria.profile.service.ProfileService;
+import java.util.List;
+
 import jakarta.validation.Valid;
+
+import org.springframework.web.bind.annotation.*;
+
+import com.ltfullstack.profileservice.dto.ApiResponse;
+import com.ltfullstack.profileservice.dto.request.RegistrationRequest;
+import com.ltfullstack.profileservice.dto.response.ProfileResponse;
+import com.ltfullstack.profileservice.service.ProfileService;
+
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
+@RequestMapping("/api/v1/profiles")
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
@@ -30,7 +31,7 @@ public class ProfileController {
                 .build();
     }
 
-    @GetMapping("/profiles")
+    @GetMapping("/")
     ApiResponse<List<ProfileResponse>> getAllProfiles() {
         return ApiResponse.<List<ProfileResponse>>builder()
                 .result(profileService.getAllProfiles())

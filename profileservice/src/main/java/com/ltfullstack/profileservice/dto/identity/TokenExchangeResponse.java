@@ -1,7 +1,8 @@
-package com.devteria.profile.dto.identity;
+package com.ltfullstack.profileservice.dto.identity;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
