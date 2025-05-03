@@ -22,3 +22,10 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
+
+idp:
+  url: http://localhost:8180
+  client-id: ltfullstack_app
+  client-secret: iwz9xprfV78ltEcWBDqH8pn5VMTx1EtF
+  realm: ltfullstack
+

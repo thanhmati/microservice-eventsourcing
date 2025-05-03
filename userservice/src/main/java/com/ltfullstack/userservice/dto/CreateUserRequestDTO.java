@@ -12,4 +12,6 @@ public class CreateUserRequestDTO {
     private String lastName;
     private LocalDate dob;
     private String name;
+
+    private String password;
 }
