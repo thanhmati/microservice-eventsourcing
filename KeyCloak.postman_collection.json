@@ -1,0 +1,423 @@
+{
+	"info": {
+		"_postman_id": "9c6b42c7-0e1d-4325-8333-6a0cecc4afc4",
+		"name": "KeyCloak",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16251815"
+	},
+	"item": [
+		{
+			"name": "Profile",
+			"item": [
+				{
+					"name": "registration",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"james2\",\r\n    \"password\": \"12345678\",\r\n    \"email\": \"james+02@yopmail.com\",\r\n    \"firstName\": \"James\",\r\n    \"lastName\": \"Bond\",\r\n    \"dob\": \"2000-04-08\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{profileUrl}}/register",
+							"host": [
+								"{{profileUrl}}"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get All Profiles",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/profile/profiles",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"profile",
+								"profiles"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "discovery Endpoint",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/realms/{{realm}}/.well-known/openid-configuration",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"realms",
+						"{{realm}}",
+						".well-known",
+						"openid-configuration"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "exchange Token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "{{clientId}}",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "{{clientSecret}}",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "james2",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "12345678",
+							"type": "text"
+						},
+						{
+							"key": "scope",
+							"value": "openid",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/realms/{{realm}}/protocol/openid-connect/token",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"realms",
+						"{{realm}}",
+						"protocol",
+						"openid-connect",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get UserInfo",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJjOW5sUmFnREpNVlVBS2hLeWUxdFExdnhMREFSbWxjSEhfZDhiYkJ0dXRBIn0.eyJleHAiOjE3NDAyMTkwNjcsImlhdCI6MTc0MDIxODc2NywianRpIjoiNzU4YmFjMjItYWU1MS00ZDJhLTkxMGMtMDM4ZGFlMGU3NDg3IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MTgwL3JlYWxtcy9sYXB0cmluaGZ1bGxzdGFjayIsImF1ZCI6ImFjY291bnQiLCJzdWIiOiI2MmFmZDY4MS1hMmI0LTRlYTctYjA0OC00ODNiMTg0MDIzNTgiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJsYXB0cmluaGZ1bGxzdGFjayIsInNpZCI6IjQ1MjQyMTA0LWI0NTktNGZmYS04ZmQ2LTk2ZmJjNGU3MDVlYyIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiIsImRlZmF1bHQtcm9sZXMtbGFwdHJpbmhmdWxsc3RhY2siXX0sInJlc291cmNlX2FjY2VzcyI6eyJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6Im9wZW5pZCBlbWFpbCBwcm9maWxlIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5hbWUiOiJUaGFuaCBEbyIsInByZWZlcnJlZF91c2VybmFtZSI6InRoYW5oZHQiLCJnaXZlbl9uYW1lIjoiVGhhbmgiLCJmYW1pbHlfbmFtZSI6IkRvIiwiZW1haWwiOiJ0aGFuaGR0QHlvcG1haWwuY28ifQ.mitR6zXfJBk72y3QdVhUX66E0Tl5fPOW6pn9cacH7C8T_uMUdDkeUvmqWHwAfPGegEIwzDq12NhAh9rT1T2tyuTjVfEbxEubBldVRqNrqcJhq79Qwhn_pln8LfcXakoUbZCMBv0kmCDrXdeldivmY0LrBVKinilcLHzDUCgEdE6rpZPV3NZgLXhlIs0IsaRZPiXiXTcKeAneEL5dHv6hPr-yOh03RXw4m_uWO_FsCIutkOVmCvh0X2wNkPWbseJ44y2E1FPYXDAXKI0P8nzbchgdtNpCoH8j-_JSetq1nn_Dto3cYEs565gyDXlmoyDZr0JLznKOlD1vWSm8uVLpMQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/realms/{{realm}}/protocol/openid-connect/userinfo",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"realms",
+						"{{realm}}",
+						"protocol",
+						"openid-connect",
+						"userinfo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "exchange Client Token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "{{clientId}}",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "{{clientSecret}}",
+							"type": "text"
+						},
+						{
+							"key": "scope",
+							"value": "openid",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/realms/{{realm}}/protocol/openid-connect/token",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"realms",
+						"{{realm}}",
+						"protocol",
+						"openid-connect",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create User",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJjOW5sUmFnREpNVlVBS2hLeWUxdFExdnhMREFSbWxjSEhfZDhiYkJ0dXRBIn0.eyJleHAiOjE3NDAyMTkyNTEsImlhdCI6MTc0MDIxODk1MSwianRpIjoiN2UyMDJjOWMtZDliOS00NDI4LWE0N2UtMmEzN2VmMWMzNzg0IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MTgwL3JlYWxtcy9sYXB0cmluaGZ1bGxzdGFjayIsImF1ZCI6WyJyZWFsbS1tYW5hZ2VtZW50IiwiYWNjb3VudCJdLCJzdWIiOiI0MjRhYjA5My1iZjQ5LTQxOTQtYTk5Ny04OWZhZWNkNThlMWYiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJsYXB0cmluaGZ1bGxzdGFjayIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiIsImRlZmF1bHQtcm9sZXMtbGFwdHJpbmhmdWxsc3RhY2siXX0sInJlc291cmNlX2FjY2VzcyI6eyJyZWFsbS1tYW5hZ2VtZW50Ijp7InJvbGVzIjpbIm1hbmFnZS11c2VycyJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6Im9wZW5pZCBlbWFpbCBwcm9maWxlIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJjbGllbnRIb3N0IjoiMTcyLjE4LjAuMSIsInByZWZlcnJlZF91c2VybmFtZSI6InNlcnZpY2UtYWNjb3VudC1sYXB0cmluaGZ1bGxzdGFjayIsImNsaWVudEFkZHJlc3MiOiIxNzIuMTguMC4xIiwiY2xpZW50X2lkIjoibGFwdHJpbmhmdWxsc3RhY2sifQ.JwaElbItfMMnQh9cD7UAkUganP0OjelVbe6lGjP_noh-_UDFDDFHuk1AP91RZnDcCEazjP3D9yOfqVXGaIYLTosxYGDo9-10pLcGC0KEiStL8AUmxjY3E4N2puEQTYXDoQIl04JuHIyBXA1ekyyg5igajc9LtIsqS9W38hi0mmXRGKC4wdYZwxVWMiibuMYMKNFRrl53lc2KVVqw-GhzH8IcfrnmxY31swrlxoicDOCsh-j-3yP0F_Ztb4xsUC2aKtH7-69P4qVraO-WUyTJUjOST_-hzyo9HduNVrcmPdbqP3FvS68WhwNoDNItB3N-2B2uZ7tKPU_g5HD2D0ScmQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"johndoe\",\r\n    \"enabled\": true,\r\n    \"email\": \"johndoe1@yopmail.com\",\r\n    \"emailVerified\": true,\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Doe\",\r\n    \"credentials\": [\r\n        {\r\n            \"type\": \"password\",\r\n            \"value\": \"12345678\",\r\n            \"temporary\": false\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/admin/realms/{{realm}}/users",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"admin",
+						"realms",
+						"{{realm}}",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get Users",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJmT01JU1MwckJwanN2MEJVQi1sNDVhRkJUVmpnUkRKVmhNNTNOR0huMTZZIn0.eyJleHAiOjE3MTkwMjk2NTQsImlhdCI6MTcxOTAyOTA1NCwianRpIjoiNDE0ODNmNzYtNWI4NS00ZTY5LWFmMGMtNDZmMTNhYmQ1MGEzIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MTgwL3JlYWxtcy9kZXZ0ZXJpYSIsImF1ZCI6WyJyZWFsbS1tYW5hZ2VtZW50IiwiYWNjb3VudCJdLCJzdWIiOiI3ZjU2NWJiMS1hNzI1LTQwZWItOThiZi01NzllZmM4Y2E0NDAiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJkZXZ0ZXJpYV9hcHAiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbIioiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iLCJkZWZhdWx0LXJvbGVzLWRldnRlcmlhIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsicmVhbG0tbWFuYWdlbWVudCI6eyJyb2xlcyI6WyJtYW5hZ2UtdXNlcnMiXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImNsaWVudEhvc3QiOiIxNzIuMTcuMC4xIiwicHJlZmVycmVkX3VzZXJuYW1lIjoic2VydmljZS1hY2NvdW50LWRldnRlcmlhX2FwcCIsImNsaWVudEFkZHJlc3MiOiIxNzIuMTcuMC4xIiwiY2xpZW50X2lkIjoiZGV2dGVyaWFfYXBwIn0.NEDjE6okBWvEQjKdkgyssoIsdnXX7Q6kbqOhXE_oqWcaHC23gh1a76HT4INkGjbXZL06lrYnk6oO3r35sos_AfXQjTB7EAmKU-_Bsagqhzo1Qiil79leHzXtN7p1Us39DBW_kPbwWNXutqJtk9MpwlV8SDtV_cjPB-rsHUtiwff_nG6mCz0CIVeRhRKgSXYmETdCkSocgsUj_TiiMbVThyraHizygi_W7Ww6ELBceBe77vPYEmlm_qxyupMYo268FbLFwPBPvSMEJC2RPBuWqQOGikKLnsMD-BDu0i-ATlJ_c5xl1uqo84C8i70VTt5A-J4bYi_4trruby0brSQW1w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8180/admin/realms/devteria/users?exact=false",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8180",
+					"path": [
+						"admin",
+						"realms",
+						"devteria",
+						"users"
+					],
+					"query": [
+						{
+							"key": "exact",
+							"value": "false"
+						},
+						{
+							"key": "email",
+							"value": "john",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get Users Credential",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJjOW5sUmFnREpNVlVBS2hLeWUxdFExdnhMREFSbWxjSEhfZDhiYkJ0dXRBIn0.eyJleHAiOjE3NDAyMTkyNTEsImlhdCI6MTc0MDIxODk1MSwianRpIjoiN2UyMDJjOWMtZDliOS00NDI4LWE0N2UtMmEzN2VmMWMzNzg0IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MTgwL3JlYWxtcy9sYXB0cmluaGZ1bGxzdGFjayIsImF1ZCI6WyJyZWFsbS1tYW5hZ2VtZW50IiwiYWNjb3VudCJdLCJzdWIiOiI0MjRhYjA5My1iZjQ5LTQxOTQtYTk5Ny04OWZhZWNkNThlMWYiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJsYXB0cmluaGZ1bGxzdGFjayIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiIsImRlZmF1bHQtcm9sZXMtbGFwdHJpbmhmdWxsc3RhY2siXX0sInJlc291cmNlX2FjY2VzcyI6eyJyZWFsbS1tYW5hZ2VtZW50Ijp7InJvbGVzIjpbIm1hbmFnZS11c2VycyJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6Im9wZW5pZCBlbWFpbCBwcm9maWxlIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJjbGllbnRIb3N0IjoiMTcyLjE4LjAuMSIsInByZWZlcnJlZF91c2VybmFtZSI6InNlcnZpY2UtYWNjb3VudC1sYXB0cmluaGZ1bGxzdGFjayIsImNsaWVudEFkZHJlc3MiOiIxNzIuMTguMC4xIiwiY2xpZW50X2lkIjoibGFwdHJpbmhmdWxsc3RhY2sifQ.JwaElbItfMMnQh9cD7UAkUganP0OjelVbe6lGjP_noh-_UDFDDFHuk1AP91RZnDcCEazjP3D9yOfqVXGaIYLTosxYGDo9-10pLcGC0KEiStL8AUmxjY3E4N2puEQTYXDoQIl04JuHIyBXA1ekyyg5igajc9LtIsqS9W38hi0mmXRGKC4wdYZwxVWMiibuMYMKNFRrl53lc2KVVqw-GhzH8IcfrnmxY31swrlxoicDOCsh-j-3yP0F_Ztb4xsUC2aKtH7-69P4qVraO-WUyTJUjOST_-hzyo9HduNVrcmPdbqP3FvS68WhwNoDNItB3N-2B2uZ7tKPU_g5HD2D0ScmQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/admin/realms/{{realm}}/users/205f7731-42de-4fe4-a91a-fe326db825f7/credentials",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"admin",
+						"realms",
+						"{{realm}}",
+						"users",
+						"205f7731-42de-4fe4-a91a-fe326db825f7",
+						"credentials"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "john",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete User",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJmT01JU1MwckJwanN2MEJVQi1sNDVhRkJUVmpnUkRKVmhNNTNOR0huMTZZIn0.eyJleHAiOjE3MTkwMjk2NTQsImlhdCI6MTcxOTAyOTA1NCwianRpIjoiNDE0ODNmNzYtNWI4NS00ZTY5LWFmMGMtNDZmMTNhYmQ1MGEzIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MTgwL3JlYWxtcy9kZXZ0ZXJpYSIsImF1ZCI6WyJyZWFsbS1tYW5hZ2VtZW50IiwiYWNjb3VudCJdLCJzdWIiOiI3ZjU2NWJiMS1hNzI1LTQwZWItOThiZi01NzllZmM4Y2E0NDAiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJkZXZ0ZXJpYV9hcHAiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbIioiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iLCJkZWZhdWx0LXJvbGVzLWRldnRlcmlhIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsicmVhbG0tbWFuYWdlbWVudCI6eyJyb2xlcyI6WyJtYW5hZ2UtdXNlcnMiXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImNsaWVudEhvc3QiOiIxNzIuMTcuMC4xIiwicHJlZmVycmVkX3VzZXJuYW1lIjoic2VydmljZS1hY2NvdW50LWRldnRlcmlhX2FwcCIsImNsaWVudEFkZHJlc3MiOiIxNzIuMTcuMC4xIiwiY2xpZW50X2lkIjoiZGV2dGVyaWFfYXBwIn0.NEDjE6okBWvEQjKdkgyssoIsdnXX7Q6kbqOhXE_oqWcaHC23gh1a76HT4INkGjbXZL06lrYnk6oO3r35sos_AfXQjTB7EAmKU-_Bsagqhzo1Qiil79leHzXtN7p1Us39DBW_kPbwWNXutqJtk9MpwlV8SDtV_cjPB-rsHUtiwff_nG6mCz0CIVeRhRKgSXYmETdCkSocgsUj_TiiMbVThyraHizygi_W7Ww6ELBceBe77vPYEmlm_qxyupMYo268FbLFwPBPvSMEJC2RPBuWqQOGikKLnsMD-BDu0i-ATlJ_c5xl1uqo84C8i70VTt5A-J4bYi_4trruby0brSQW1w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8180/admin/realms/devteria/users/8e7c2389-68d9-47fc-8453-dc5d0a1e9ed0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8180",
+					"path": [
+						"admin",
+						"realms",
+						"devteria",
+						"users",
+						"8e7c2389-68d9-47fc-8453-dc5d0a1e9ed0"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "realm",
+			"value": "laptrinhfullstack",
+			"type": "string"
+		},
+		{
+			"key": "clientId",
+			"value": "laptrinhfullstack",
+			"type": "string"
+		},
+		{
+			"key": "clientSecret",
+			"value": "dRdUaA1lgMVYmKqoCl3g4cUtql05Fj47",
+			"type": "string"
+		},
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8180",
+			"type": "string"
+		},
+		{
+			"key": "profileUrl",
+			"value": "http://localhost:9005",
+			"type": "string"
+		}
+	]
+}
