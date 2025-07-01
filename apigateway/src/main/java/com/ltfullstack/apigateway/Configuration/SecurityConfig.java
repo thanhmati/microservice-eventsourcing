@@ -12,9 +12,10 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 public class SecurityConfig {
 
     @Bean
-    public SecurityWebFilterChain filterChain(ServerHttpSecurity http) throws Exception {
-        http.authorizeExchange(exchange -> exchange
-                .pathMatchers("/public/**").permitAll() // Cho phép không auth
+     SecurityWebFilterChain filterChain(ServerHttpSecurity http) throws Exception {
+        http.csrf(ServerHttpSecurity.CsrfSpec::disable)
+        .authorizeExchange(exchange -> exchange
+                .pathMatchers("/api/v1/users/public/**").permitAll() // Cho phép không auth
                 .anyExchange().authenticated()          // Còn lại cần xác thực
         )
                 .oauth2ResourceServer(resourceServer -> resourceServer
