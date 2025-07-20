@@ -2,6 +2,7 @@ package com.ltfullstack.userservice.repository;
 import com.ltfullstack.userservice.dto.identity.TokenExchangeParam;
 import com.ltfullstack.userservice.dto.identity.TokenExchangeResponse;
 import com.ltfullstack.userservice.dto.identity.UserCreationParam;
+import com.ltfullstack.userservice.dto.identity.UserTokenExchangeParam;
 import feign.QueryMap;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
@@ -20,4 +21,7 @@ public interface IdentityClient {
 
     @PostMapping(value = "/admin/realms/ltfullstack/users", consumes = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<?> createUser(@RequestHeader("authorization") String token, @RequestBody UserCreationParam param);
+
+    @PostMapping(value = "realms/ltfullstack/protocol/openid-connect/token", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    TokenExchangeResponse exchangeUserToken(@QueryMap UserTokenExchangeParam param);
 }

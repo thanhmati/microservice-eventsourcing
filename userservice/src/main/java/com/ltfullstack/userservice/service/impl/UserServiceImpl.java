@@ -1,10 +1,9 @@
 package com.ltfullstack.userservice.service.impl;
 
 import com.ltfullstack.userservice.dto.CreateUserRequestDTO;
+import com.ltfullstack.userservice.dto.LoginRequestDto;
 import com.ltfullstack.userservice.dto.UserResponseDTO;
-import com.ltfullstack.userservice.dto.identity.Credential;
-import com.ltfullstack.userservice.dto.identity.TokenExchangeParam;
-import com.ltfullstack.userservice.dto.identity.UserCreationParam;
+import com.ltfullstack.userservice.dto.identity.*;
 import com.ltfullstack.userservice.entity.User;
 import com.ltfullstack.userservice.repository.IdentityClient;
 import com.ltfullstack.userservice.repository.UserRepository;
@@ -107,6 +106,19 @@ public class UserServiceImpl implements IUserService {
     @Override
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public TokenExchangeResponse login(LoginRequestDto dto) {
+        var token = identityClient.exchangeUserToken(UserTokenExchangeParam.builder()
+                .grant_type("password")
+                .client_id(clientId)
+                .client_secret(clientSecret)
+                .scope("openid")
+                .username(dto.getUsername())
+                .password(dto.getPassword())
+                .build());
+        return token;
     }
 
     private UserResponseDTO toDTO(User user) {
