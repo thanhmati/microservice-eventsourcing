@@ -48,7 +48,7 @@ public class UserServiceImpl implements IUserService {
                 .scope("openid")
                 .build());
 
-        log.info("Token info",token);
+
         var creationResponse = identityClient.createUser(UserCreationParam.builder()
                 .username(dto.getUsername())
                 .firstName(dto.getFirstName())

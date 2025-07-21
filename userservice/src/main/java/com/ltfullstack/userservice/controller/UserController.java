@@ -3,6 +3,7 @@ package com.ltfullstack.userservice.controller;
 import com.ltfullstack.userservice.dto.CreateUserRequestDTO;
 import com.ltfullstack.userservice.dto.UserResponseDTO;
 import com.ltfullstack.userservice.service.IUserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,18 +12,20 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/users")
+@Slf4j
 public class UserController {
 
     @Autowired
     private IUserService userService;
 
-    @PostMapping
-    public ResponseEntity<UserResponseDTO> createUser(@RequestBody CreateUserRequestDTO dto) {
-        return ResponseEntity.ok(userService.createUser(dto));
-    }
+   
 
     @GetMapping
-    public ResponseEntity<List<UserResponseDTO>> getAllUsers() {
+    public ResponseEntity<List<UserResponseDTO>> getAllUsers( @RequestHeader(value = "X-User-Id", required = false) String userId,
+                                                              @RequestHeader(value = "X-Username", required = false) String username) {
+
+        System.out.println("Received X-User-Id: " + userId);
+        System.out.println("Received X-Username: " + username);
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
