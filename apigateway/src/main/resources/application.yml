@@ -34,12 +34,27 @@ spring:
                             redis-rate-limiter.burstCapacity: 20
                             redis-rate-limiter.requestedTokens: 1
                       - KeyAuthFilter
+                - id: userservice
+                  uri: http://localhost:9005
+                  predicates:
+                    - Path=/api/v1/users/**
+                - id: userservice-public
+                  uri: http://localhost:9005
+                  predicates:
+                    - Path=/api/v1/public/**
+
+
+    security:
+      oauth2:
+        resourceserver:
+          jwt:
+            issuer-uri: http://localhost:8180/realms/ltfullstack
 
 eureka:
     instance:
-        hostname: discoveryserver
+        hostname: localhost
     client:
         service-url:
-            defaultZone: http://discoveryserver:8761/eureka
+            defaultZone: http://localhost:8761/eureka
             register-with-eureka: true
             fetch-registry: true
