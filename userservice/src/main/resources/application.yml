@@ -25,5 +25,5 @@ spring:
 idp:
     url: http://localhost:8180
     client-id: ltfullstack_app
-    client-secret: 11DTc0RvywWHNlB73oj3B23fhjpNwISb
+    client-secret: CTXKd76XVBVodcVQVEQHrSgzDIg1KJFn
     realm: ltfullstack

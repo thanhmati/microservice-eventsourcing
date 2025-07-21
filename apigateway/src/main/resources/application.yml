@@ -36,16 +36,17 @@ spring:
                             redis-rate-limiter.burstCapacity: 20
                             redis-rate-limiter.requestedTokens: 1
                       - KeyAuthFilter
-                - id: userservice-public
-                  uri: http://localhost:9005
-                  predicates:
-                      - Path=/api/v1/users/public/**
                 - id: userservice
                   uri: http://localhost:9005
                   predicates:
                       - Path=/api/v1/users/**
                   filters:
                       - JwtHeaderFilter
+
+                - id: userservice-public
+                  uri: http://localhost:9005
+                  predicates:
+                      - Path=/api/v1/public/**
 
     security:
         oauth2:
