@@ -190,7 +190,7 @@ curl http://localhost:9002/actuator/health  # Employee Service
 ## 📚 Learning Resources
 
 ### 📖 Detailed Documentation
-- **[Complete Course Documentation](./Tai_lieu_khoa_hoc_Microservice_Event_Sourcing.md)** - Comprehensive guide for students and instructors
+- **[Complete Course Documentation](./TEACHING_GUIDE.md)** - Comprehensive guide for students and instructors
 
 ### 🎓 Key Concepts Covered
 - **Event Sourcing** - Store events instead of current state
