@@ -295,7 +295,7 @@ docker-compose exec broker kafka-topics --bootstrap-server localhost:9092 --list
 ```
 
 ### Getting Help
-- 📖 Check the [detailed documentation](./Tai_lieu_khoa_hoc_Microservice_Event_Sourcing.md)
+- 📖 Check the [detailed documentation](./TEACHING_GUIDE.md)
 - 🐛 Report issues in the GitHub Issues section
 - 💬 Join discussions in the project wiki
 
