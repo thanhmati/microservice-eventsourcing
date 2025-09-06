@@ -9,6 +9,71 @@
 5. [Student Guide](#5-student-guide)
 6. [Instructor Guide](#6-instructor-guide)
 
+### 🎓 Đối Tượng Học Viên
+
+| 👥 Đối Tượng | 📊 Level | 🎯 Mục Tiêu | 💼 Ứng Dụng |
+|-------------|---------|------------|-------------|
+| **Backend Developer** | Intermediate+ | Nâng cao kỹ năng Microservices | Senior Developer role |
+| **Fullstack Developer** | Intermediate | Hiểu architecture phức tạp | Solution Architect |
+| **DevOps Engineer** | Beginner+ | Container orchestration | Production deployment |
+| **Tech Lead** | Advanced | System design patterns | Team leadership |
+| **Students/Graduates** | Intermediate | Real-world experience | Industry readiness |
+
+---
+
+### 🛠️ Prerequisites & Preparation
+
+#### ✅ Required Knowledge
+| Technology     | Level        | Verification                                                      |
+|----------------|--------------|-------------------------------------------------------------------|
+| **Java**       | Intermediate | Can write classes, interfaces, generics, handle exceptions        |
+| **Spring Boot**| Basic        | Can create REST controllers, use annotations, run application     |
+| **REST APIs**  | Basic        | Understand HTTP methods, status codes                             |
+| **Docker**     | Basic        | Can run containers, build images, basic commands                  |
+| **Git**        | Basic        | Clone, commit, push operations                                    |
+
+
+#### 🚀 Recommended Setup
+```bash
+# Environment Check
+java --version          # v17+ required
+maven --version           # v3.6+ required  
+docker --version        # v20+ recommended
+git --version           # v2.30+ recommended
+```
+---
+
+## 📌 Tương tác với Giảng viên
+
+Khóa học không chỉ dừng lại ở video lý thuyết – bạn sẽ luôn có **sự đồng hành trực tiếp từ giảng viên** trong suốt quá trình học.
+
+### 💬 Hỏi – Đáp nhanh chóng
+- Đặt câu hỏi trực tiếp bên dưới mỗi bài học hoặc trong mục Q&A.
+- Nhận phản hồi nhanh chóng và giải thích rõ ràng từ khái niệm cơ bản đến kỹ thuật nâng cao.
+
+### 🛠 Hỗ trợ xử lý lỗi
+- Mô tả vấn đề và đính kèm code khi gặp lỗi.
+- Giảng viên sẽ hướng dẫn từng bước để khắc phục và giải thích nguyên nhân.
+
+### 🤝 Trao đổi cùng cộng đồng học viên
+- Tham gia **group riêng** để thảo luận, chia sẻ kinh nghiệm và học hỏi lẫn nhau.
+- Kết nối với các học viên khác đang làm trong ngành.
+  
+### 🌐 Liên hệ & Kết nối
+Nếu bạn cần hỗ trợ hoặc muốn kết nối thêm ngoài khóa học, có thể liên hệ qua:
+
+- 📧 **Email:** [dotanthanhvlog@gmail.com](mailto:dotanthanhvlog@gmail.com)  
+- 💼 **LinkedIn:** [https://www.linkedin.com/in/thanh270600/](https://www.linkedin.com/in/thanh270600/)  
+- 🐙 **GitHub:** [https://github.com/thanhmati](https://github.com/thanhmati)  
+- 📺 **YouTube:** [https://www.youtube.com/@laptrinhfullstack](https://www.youtube.com/@laptrinhfullstack)  
+- 💬 **Facebook Group:** [https://www.facebook.com/groups/ltfullstack](https://www.facebook.com/groups/ltfullstack)
+- 📞 **Zalo** 0762216048 
+
+
+> 💡 **Phương châm:** *“Học thật – Làm thật”*  
+Giảng viên sẽ luôn theo sát để bạn không chỉ **hoàn thành khóa học**, mà còn **tự tin triển khai dự án thực tế**.
+
+
 ---
 
 ## 1. Tổng quan hệ thống
